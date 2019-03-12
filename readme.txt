@@ -1,7 +1,8 @@
 Initial Setup & Config:
 
 1. Install git:
-		sudo apt-get install git
+		Linux: sudo apt-get install git
+		macOS: brew install git
 2. Clone this repo:
 		git clone <uri_of_git_file>
 3. cd into the cloned directory
@@ -19,12 +20,14 @@ Initial Setup & Config:
 10. Install Celery:
 		pip install celery
 11. Install RabbitMQ server:
-		sudo apt-get install rabbitmq-server
+		Linux: sudo apt-get install rabbitmq-server
+		macOS: brew install rabbitmq
 12. Start the RabbitMQ server:
-		sudo systemctl start rabbitmq-server
+		Linux: sudo systemctl start rabbitmq-server
+		macOS: rabbitmq-server
 13. Make sure it's running:
 		sudo rabbitmqctl status
-14. Take note of the node name in the output of step 12
+14. Take note of the node name in the output of step 13
 15. Add RabbitMQ user:
 		sudo rabbitmqctl add_user flask flask
 16. Add RabbitMQ vHost:
@@ -59,3 +62,4 @@ Initial Setup & Config:
 Doc improvements needed:
 - How to ascertain sensor 'id' value and get sensor working under w1/devices
 - More in-depth guidance for pyo installation
+- Better macOS instructions
