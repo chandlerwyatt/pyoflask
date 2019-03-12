@@ -3,7 +3,7 @@ from celery import Celery
 import pyo
 
 app = Flask(__name__)
-app.config.update(CELERY_BROKER_URL='<celery_worker_transport>')
+app.config.update(CELERY_BROKER_URL='<celery_broker>')
 
 
 def make_celery(app):
@@ -42,8 +42,9 @@ class PyoTask(celery.Task):
         print(f'got {temp} on a worker')
         mod = int(temp) % 100
 
-        self.hr.mul = mod * 0.12
+        self.hr.mul = mod * 0.2
         self.hr.transpo = (mod - 50) * 0.25
+        self.dist.drive = mod * 0.5
 
 
 celery.tasks.register(PyoTask)
