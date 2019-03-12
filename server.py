@@ -1,9 +1,13 @@
 from flask import Flask, request
 from celery import Celery
+import json
 import pyo
 
+with open('config.json', 'r') as fp:
+    config = json.load(fp)
+
 app = Flask(__name__)
-app.config.update(CELERY_BROKER_URL='<celery_broker>')
+app.config.update(CELERY_BROKER_URL=config['celery_broker'])
 
 
 def make_celery(app):
@@ -31,7 +35,7 @@ class PyoTask(celery.Task):
     def __init__(self):
         print('init was called')
         self.server = pyo.Server().boot()
-        self.sf = pyo.SfPlayer("<filename>.wav", loop=True)  # replace <filename>
+        self.sf = pyo.SfPlayer(config['wav_file'], loop=True)  # replace <filename>
         self.hr = pyo.Harmonizer(self.sf).out()
         self.ch = pyo.Chorus(self.sf).out()
         self.dist = pyo.Disto(self.sf).out()

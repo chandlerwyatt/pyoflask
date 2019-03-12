@@ -40,10 +40,10 @@ Initial Setup & Config:
 18. Install screen:
 		Linux: sudo apt-get install screen
 		macOS: sudo chmod 777 /usr/local/sbin; brew install screen; sudo chmod 775 /usr/local/sbin
-19. Modify server.py in the following ways:
-	a. Enter the following for 'CELERY_BROKER_URL':
-		'amqp://flask:flask@localhost:5672/flask_vhost'
-	b. Enter the name (string) of an existing wav file on line 34 as SfPlayer's first arg
+19. Create, then modify config.json in the following ways:
+	a. Add entry for 'celery_broker' with value:
+		"amqp://flask:flask@localhost:5672/flask_vhost"
+	b. Add entry for 'wav_file' with the value: "<name_of_existing_wav_file>.wav"
 20. Create a screen for flask server:
 		screen -S flask
 21. Start flask server:
