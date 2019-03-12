@@ -24,9 +24,12 @@ Initial Setup & Config:
 		macOS: brew install rabbitmq
 12. Start the RabbitMQ server:
 		Linux: sudo systemctl start rabbitmq-server
-		macOS: rabbitmq-server
+		macOS: brew services start rabbitmq
 13. Make sure it's running:
 		sudo rabbitmqctl status
+	a. If you get an error that the command does not exist, run the following, all on one line: 
+		if [ ! -d /usr/local/sbin ]; then sudo mkdir /usr/local/sbin; fi && sudo chmod 777 /usr/local/sbin; brew link rabbitmq; sudo chmod 775 /usr/local/sbin
+	b. After that, try running the rabbitmqctl status command again
 14. Take note of the node name in the output of step 13
 15. Add RabbitMQ user:
 		sudo rabbitmqctl add_user flask flask
@@ -35,28 +38,29 @@ Initial Setup & Config:
 17. Set RabbitMQ permissions:
 		sudo rabbitmqctl set_permissions -p flask_vhost flask ".*" ".*" ".*"
 18. Install screen:
-		sudo apt-get install screen
-19. Create screen for celery worker:
-		screen -S celery
-20. Start celery worker:
-		celery -A server.celery worker
-21. Copy the value of "transport:" from the celery worker screen
-22. Detach from celery screen:
-		keystroke: <CTRL>+A, D
-23. Modify server.py in the following ways:
-	a. Enter the string from step 21 on line 6 for 'CELERY_BROKER_URL' value
+		Linux: sudo apt-get install screen
+		macOS: sudo chmod 777 /usr/local/sbin; brew install screen; sudo chmod 775 /usr/local/sbin
+19. Modify server.py in the following ways:
+	a. Enter the following for 'CELERY_BROKER_URL':
+		'amqp://flask:flask@localhost:5672/flask_vhost'
 	b. Enter the name (string) of an existing wav file on line 34 as SfPlayer's first arg
-24. Create a screen for flask server:
+20. Create a screen for flask server:
 		screen -S flask
-25. Start flask server:
+21. Start flask server:
 		flask run --host=0.0.0.0
-26. Detach from the screen:
+22. Detach from the screen:
 		keystroke: <CTRL>+A, D
-27. Get your computer's IP address:
+23. Create screen for celery worker:
+		screen -S celery
+24. Start celery worker:
+		celery -A server.celery worker
+25. Detach from celery screen:
+		keystroke: <CTRL>+A, D
+26. Get your computer's IP address:
 		ifconfig
-28. On the RPi, go edit temp_read_post.py and set the 'ip' var to that IP address (as string)
-29. Run temp_read_post.py on the Pi
-30. Manipulate the temp sensor to modify parameter values and make cray ish like woah
+27. On the RPi, go edit temp_read_post.py and set the 'ip' var to that IP address (as string)
+28. Run temp_read_post.py on the Pi
+29. Manipulate the temp sensor to modify parameter values and make cray ish like woah
 
 
 Doc improvements needed:
