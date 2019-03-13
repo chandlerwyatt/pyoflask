@@ -23,6 +23,9 @@ while True:
         sleep(1)
     else:
         print(f'got {temp} on a worker')
-        mod = (int(temp) - 16000) / 1000 # range between -14 and 14
+        mod = (int(temp) - 19000) / 1000  # range between -14 and 14
         print(f'using mod {mod}')
         hr.transpo = mod - 7
+        print(f"set transpo to {hr.transpo}")
+        dly.delay = mod * 0.05
+        print(f"set delay to {dly.delay}")
