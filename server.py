@@ -1,15 +1,18 @@
 from flask import Flask, request
-from celery import Celery
+#from celery import Celery
 import json
-import pyo
+import redis
+#import pyo
 
 with open('config.json', 'r') as fp:
     config = json.load(fp)
 
 app = Flask(__name__)
-app.config.update(CELERY_BROKER_URL=config['celery_broker'])
 
+r = redis.Redis(host='localhost', port=6379, db=0)
+#app.config.update(CELERY_BROKER_URL=config['celery_broker'])
 
+"""
 def make_celery(app):
     celery = Celery(
         app.import_name,
@@ -27,7 +30,6 @@ def make_celery(app):
 
 
 celery = make_celery(app)
-
 
 class PyoTask(celery.Task):
     name = "process_temp"
@@ -52,11 +54,13 @@ class PyoTask(celery.Task):
 
 
 celery.tasks.register(PyoTask)
+"""
 
 
 @app.route('/temp', methods=['POST'])
 def temp():
     data = request.get_data(as_text=True)
     print(f"Got data : {data}")
-    celery.tasks['process_temp'].delay(data)
+    #celery.tasks['process_temp'].delay(data)
+    r.lpush('temp', data)
     return 'OK'
