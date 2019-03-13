@@ -27,5 +27,7 @@ while True:
         print(f'using mod {mod}')
         hr.transpo = mod - 7
         print(f"set transpo to {hr.transpo}")
-        dly.delay = mod * 0.05
+        dly.delay = (mod + 14) * 0.05
         print(f"set delay to {dly.delay}")
+        sf.setSpeed((mod+14)/14)
+        print(f"set speed to {sf.speed}")
