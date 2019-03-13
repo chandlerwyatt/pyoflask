@@ -23,7 +23,6 @@ while True:
         sleep(1)
     else:
         print(f'got {temp} on a worker')
-        mod = int(temp) % 100
-
-        hr.mul = mod * 0.2
-        hr.transpo = (mod - 50) * 0.25
+        mod = (int(temp) - 16000) / 1000 # range between -14 and 14
+        print(f'using mod {mod}')
+        hr.transpo = mod - 7
