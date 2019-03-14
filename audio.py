@@ -11,9 +11,10 @@ r = redis.Redis(host='localhost', port=6379, db=0)
 
 server = pyo.Server().boot()
 sf = pyo.SfPlayer(config['wav_file'], loop=True)  # replace <filename>
-hr = pyo.Harmonizer(sf).out()
-ch = pyo.Chorus(sf).out()
-dly = pyo.Delay(sf).out()
+sh = pyo.FreqShift(sf)
+hr = pyo.Harmonizer(sh).out()
+ch = pyo.Chorus(sh).out()
+dly = pyo.Delay(sh).out()
 server.start()
 
 while True:
@@ -29,5 +30,7 @@ while True:
         print(f"set transpo to {hr.transpo}")
         dly.delay = (mod + 14) * 0.05
         print(f"set delay to {dly.delay}")
-        sf.setSpeed((mod+14)/14)
-        print(f"set speed to {sf.speed}")
+        sh.setShift((mod + 14) * 16)
+        print(f"set shift to {sh.shift}")
+        #sf.setSpeed((mod+14)/14)
+        #print(f"set speed to {sf.speed}")
