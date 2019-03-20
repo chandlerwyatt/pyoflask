@@ -11,11 +11,12 @@ def gettemp(id):
 	if crc == 'YES':
 		line = f.readline() # read second line
 		mytemp = line.rsplit('t=', 1)
+		mytemp = int(mytemp[1])
 	else:
-		mytemp = 999999
+		mytemp = None
 	f.close()
 
-	return int(mytemp[1])
+	return mytemp
 
 
 if __name__ == '__main__':
@@ -27,7 +28,10 @@ if __name__ == '__main__':
 
 	while True:
 		temp_c = gettemp(id)
-		print("Temp : " + '{:.3f}'.format(temp_c/1000))
-		print("Posting {} to flask server API".format(temp_c))
-		requests.post(flask_server, data=str(temp_c))
+		if temp_c is not None:
+			print("Temp : " + '{:.3f}'.format(temp_c/1000))
+			print("Posting {} to flask server API".format(temp_c))
+			requests.post(flask_server, data=str(temp_c))
+		else:
+			print("CRC failed for temperature sensor!")
 		sleep(1)
