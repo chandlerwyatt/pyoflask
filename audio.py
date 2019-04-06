@@ -11,7 +11,7 @@ r = redis.Redis(host='localhost', port=6379, db=0)
 
 server = pyo.Server().boot()
 sf = pyo.SfPlayer(config['wav_file'], loop=True)  # replace <filename>
-sh = pyo.FreqShift(sf)
+sh = pyo.FreqShift(sf).out()
 hr = pyo.Harmonizer(sh).out()
 ch = pyo.Chorus(sh).out()
 dly = pyo.Delay(sh).out()
