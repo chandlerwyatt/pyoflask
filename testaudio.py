@@ -9,7 +9,7 @@ with open('config.json', 'r') as fp:
 # r = redis.Redis(host='localhost', port=6379, db=0)
 
 server = pyo.Server().boot()
-sf = pyo.SfPlayer(config['wav_file'], loop=True)  # replace <filename>
+sf = pyo.SfPlayer(<"filename.wav">, loop=True)  # replace <filename>
 sh = pyo.FreqShift(sf)
 sh.ctrl()
 hr = pyo.Harmonizer(sh).out()
